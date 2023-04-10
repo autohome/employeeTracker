@@ -1,12 +1,3 @@
--- need 3 tables. Departments, Roles, Employees
-
-
-
-DROP DATABASE IF EXISTS business_db;
-CREATE DATABASE business_db;
-
-USE business_db;
-
 -- DEPT- dept names, dept ids
 
 CREATE TABLE departments(
@@ -14,6 +5,11 @@ CREATE TABLE departments(
     name VARCHAR(30) NOT NULL
 );
 
+INSERT INTO departments (dept_name)
+VALUES ("Engineering"),
+        ("Finance"),
+        ("Legal"),
+        ("Sales");
 
 -- Roles - job title, role id, the department that role belongs to, and the salary for that role
 
@@ -26,6 +22,15 @@ CREATE TABLE roles (
     REFERENCES departments(name)
 );
 
+INSERT INTO roles (title, department, salary )
+VALUES ("Sales Lead", "Sales", 100000),
+        ("Salesperson", "Sales", 80000),
+        ("Lead Engineer", "Engineering", 150000),
+        ("Software Engineer", "Engineering", 120000),
+        ("Account Manager", "Finance", 160000),
+        ("Accountant", "Finance", 125000),
+        ("Legal Team Lead", "Legal", 250000),
+        ("Lawyer", "Legal", 190000);
 
 
 -- employees -showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
