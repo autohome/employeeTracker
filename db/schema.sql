@@ -20,10 +20,10 @@ CREATE TABLE departments(
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
-    department VARCHAR(30) NOT NULL,
+    department_id VARCHAR(30),
     salary INT NOT NULL,
-    FOREIGN KEY (department)
-    REFERENCES departments(name)
+    FOREIGN KEY (id)
+    REFERENCES departments(id)
 );
 
 
@@ -31,13 +31,14 @@ CREATE TABLE roles (
 -- employees -showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
 
 CREATE TABLE employees (
-    employee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    job_title VARCHAR(30) NOT NULL,
-    dept_name VARCHAR(30) NOT NULL,
-    salary INT NOT NULL,
+    job_title VARCHAR(30),
+    -- dept_name VARCHAR(30) NOT NULL,
+    -- salary INT NOT NULL,
     managed_by VARCHAR(30),
-    FOREIGN KEY (managed_by)
-    REFERENCES 
+    FOREIGN KEY (job_title)
+    REFERENCES roles(title)
+    ON DELETE SET NULL
 );

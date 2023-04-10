@@ -42,8 +42,31 @@ function init() {
         startWork(response))
 }
 
+function startWork(command) {
+    switch (command) {
+        case "View All Employees" :
+            command;
+        case "Add Employee":
+
+        case "Update Employee Role":
+
+        case "View All Roles":
+
+        case "Add Role":
+
+        case "View All Departments":
+
+        case "Add Department":
+
+        case "Quit":
+            exit();
+    }
+}
 
 
+function exit () {
+    prompt.ui.close
+}
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
 
