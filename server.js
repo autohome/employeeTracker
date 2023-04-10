@@ -45,7 +45,7 @@ function init() {
 function startWork(command) {
     switch (command) {
         case "View All Employees" :
-            command;
+            db.query('SELECT ')
         case "Add Employee":
 
         case "Update Employee Role":
@@ -55,7 +55,10 @@ function startWork(command) {
         case "Add Role":
 
         case "View All Departments":
-
+            db.query('SELECT * FROM departments',function (err, results) {
+                console.log(results);
+            });
+            init();
         case "Add Department":
 
         case "Quit":
