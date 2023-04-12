@@ -37,7 +37,7 @@ CREATE TABLE employees (
     role_id INT,
     -- dept_name VARCHAR(30) NOT NULL,
     -- salary INT NOT NULL,
-    managed_by VARCHAR(30),
+    managed_by INT,
     FOREIGN KEY (role_id)
     REFERENCES roles(id)
     ON DELETE SET NULL
