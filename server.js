@@ -93,45 +93,45 @@ LEFT JOIN employees m ON e.managed_by = m.id;`, (err, res) => {
 }
 
 function updateRole() {
-    db.query(`SELECT CONCAT(e.first_name, ' ', e.last_name) AS employee_name FROM employees e`),
-        (err, res) => {
+    db.query(`SELECT CONCAT(e.first_name, ' ', e.last_name) AS employee_name FROM employees e`, (err, res) => {
+        if (err) throw err;
+
+        const employeeChoices = res.map(employee => ({ name: employee.employee_name, value: employee.id }));
+
+        // Fetch list of roles from roles table
+        db.query('SELECT * FROM roles;', (err, res) => {
             if (err) throw err;
 
-            const employeeChoices = res.map(employee => ({ name: employee.employee_name, value: employee.id }));
+            const roleChoices = res.map(role => ({ name: role.title, value: role.id }));
 
-            // Fetch list of roles from roles table
-            db.query('SELECT * FROM roles;', (err, res) => {
-                if (err) throw err;
-
-                const roleChoices = res.map(role => ({ name: role.title, value: role.id }));
-
-                inquirer
-                .prompt([
-                    {
-                        type: 'list',
-                        message: 'Which employee would you like to update?',
-                        name: 'employeeID',
-                        choices: employeeChoices
-                    },
-                    {
-                        type: 'list',
-                        message: 'What is the employee\'s new role?',
-                        name: 'roleID',
-                        choices: roleChoices
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    message: 'Which employee would you like to update?',
+                    name: 'employeeID',
+                    choices: employeeChoices
+                },
+                {
+                    type: 'list',
+                    message: 'What is the employee\'s new role?',
+                    name: 'roleID',
+                    choices: roleChoices
+                }
+            ]).then((response) => {
+                db.query(
+                    'UPDATE employees SET role_id =? WHERE id =?',
+                    [response.roleID, response.employeeID],
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log(`Updated employee's role!\n`);
+                        init();
                     }
-                ]).then((response) => {
-                    db.query(
-                        'UPDATE employees SET role_id =? WHERE id =?',
-                        [response.roleID, response.employeeID],
-                        (err, res) => {
-                            if (err) throw err;
-                            console.log(`${res.affectedRows} employee updated!\n`);
-                        }
-                    );
-                });
+                );
             });
-        }
+        });
+    });
 };
+
 
 function addEmployee() {
     db.query('SELECT * FROM roles;', (err, res) => {
