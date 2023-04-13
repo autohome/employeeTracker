@@ -259,8 +259,8 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-app.listen(PORT, () =>
-    console.log(`Example app listening at http://localhost:${PORT}`)
-);
+// app.listen(PORT, () =>
+//     // console.log(`Example app listening at http://localhost:${PORT}`)
+// );
 
 init();
